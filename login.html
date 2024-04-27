@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h2>User Login</h2>
+    <form id="loginForm" method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Login">
+    </form>
+    <p id="loginMessage"></p>
+
+    <script>
+        $(document).ready(function(){
+            $('#loginForm').submit(function(event){
+                event.preventDefault();
+                
+                var username = $('#username').val();
+                var password = $('#password').val();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: 'login.php',
+                    data: {username: username, password: password},
+                    success: function(response){
+                        $('#loginMessage').html(response);
+                        if(response == "Login successful!") {
+                            // Set session data
+                            sessionStorage.setItem('loggedIn', 'true');
+                            sessionStorage.setItem('username', username);
+                            window.location.href = "next_page.html"; // Redirect to next page
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

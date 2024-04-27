@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h2>User Registration</h2>
+    <form id="registrationForm" method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Register">
+    </form>
+    <p id="registrationMessage"></p>
+
+    <script>
+        $(document).ready(function(){
+            $('#registrationForm').submit(function(event){
+                event.preventDefault();
+                
+                var username = $('#username').val();
+                var password = $('#password').val();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: 'register.php',
+                    data: {username: username, password: password},
+                    success: function(response){
+                        $('#registrationMessage').html(response);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
